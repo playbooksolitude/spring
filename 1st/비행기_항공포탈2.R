@@ -53,7 +53,19 @@ ap_2sheet |>
   filter(날짜 == "20240207") -> temp2
 
 
+#
+ap_2sheet |> 
+  count(출발공항명, 항공사, 현황, sort = T) |> 
+  print(n = 30)
 
+
+ap_2sheet |> 
+  count(출발공항명, 항공사, 현황, sort = T) |> 
+  #filter(현황 == "지연")
+  filter(출발공항명 %in% c("다낭", "푸동", "홍콩")) |> 
+  pivot_wider(names_from = "현황", values_from = n) |> 
+  view()
+  
 
 # ggplot ----
 ap_2sheet
@@ -69,7 +81,7 @@ count(ap_2sheet, 출발공항명, 구분) |>
 
 #
 ap_1sheet
-count(ap_1sheet, 출발공항명, 항공사, 구분, sort = T) |>
+count(ap_1sheet, 출발공항명, 구분, sort = T) |>
   #count(ap_1sheet, 출발공항명, 구분) |> 
   filter(n < 11) |> 
   ggplot(aes(x = 출발공항명, y = 구분, fill = n)) +
@@ -77,7 +89,8 @@ count(ap_1sheet, 출발공항명, 항공사, 구분, sort = T) |>
   coord_flip() +
   facet_wrap(.~구분, scales = "free") +
   geom_text(aes(label = n), color = "white") +
-  scale_fill_gradient() 
+  scale_fill_gradient() +
+  theme(legend.position = "none")
 
 
 #
