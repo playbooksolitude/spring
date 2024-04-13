@@ -15,11 +15,12 @@ airport_2402_Sheet <- read_csv("1st/airport_2402 - Sheet.csv")
 airport_2402_Sheet |> head()
 airport_2402_Sheet |> tail()
 
-#2 wordcolud ----
-library(wordcloud)
-
+##2-1 ----
 airport_2402_Sheet |> 
   count(출발공항명, sort = T) -> aptable
+
+#2 wordcolud ----
+library(wordcloud)
 
 # wordcloud
 wordcloud(words = aptable$출발공항명, 
@@ -33,56 +34,59 @@ wordcloud(words = aptable$출발공항명,
 
 #3 wordclou2
 library(wordcloud2)
+wordcloud2(demoFreq, size = 1.0)
+
+## 3-1 shape ----
+# circle / cardioid / diamond / triangle-forward / triangle / pentagon / star
+wordcloud2(demoFreq, size = 1,shape = 'star')
+wordcloud2(demoFreq, size = 1,shape = 'pentagon')
+
+
 wordcloud2(data = aptable,
-           size = 2, shape = "star")
+           size = 1, shape = "star")
 
 #
-aptable |> filter(n > 100) |> 
+aptable |> 
+  filter(n > 100) |> 
   wordcloud2(size = 1, 
              backgroundColor = "black", 
-             shape = "cardioid")
+             shape = "diamond")
 
-  ##응용 ----
-aptable |> filter(n > 200) |> 
-  wordcloud2(size = 1, 
-             backgroundColor = "black", 
-             shape = "circle")
-
-
-## shape ----
-# circle / cardioid / diamond / triangle-forward / triangle / pentagon / star
 
 ## color ----
   #random-light 
 
 aptable |> filter(n > 200) |> 
+  wordcloud2(size = 1, 
+             #backgroundColor = "black", 
+             shape = "circle")
+
+aptable |> filter(n > 200) |> 
   wordcloud2(size = 2, 
-             backgroundColor = "black", 
+             #backgroundColor = "black", 
              shape = "star", 
              color = "random-light", 
              ellipticity=1)
-#
-aptable |> filter(n > 300) |> 
-  wordcloud2(size = 1, 
+## nord()
+#install.packages("nord")
+library(nord)
+nord_palettes
+
+#https://cran.r-project.org/web/packages/nord/readme/README.html
+#https://m.blog.naver.com/regenesis90/222204802284
+
+#par(mfrow=c(8, 2), lheight = 2, mar=rep(1, 4), adj = 0)
+#walk(names(nord_palettes), nord_show_palette)
+# dev.off()
+
+aptable |> filter(n > 100) |> 
+  wordcloud2(size = .5, 
              #backgroundColor = "black", 
-             shape = "circle", 
-             #color = nord("aurora"), 
+             shape = "star", 
+             color = nord("aurora"), 
              #color = nord("frost"),
-             color = nord("lumina"),
-             ellipticity=1)
-
-#
-wordcloud2(aptable, figPath = "./2nd/aa.png")
+             #color = nord("afternoon_prarie")
+             )
 
 
-#
-#letterCloud(data = aptable, word = abc, size = 2)
-
-
-
-mpg |> 
-  count(manufacturer) |> 
-  letterCloud(word = "R", size = 1, fontFamily='나눔바른고딕')
-
-letterCloud(demoFreq, word='R')
 
