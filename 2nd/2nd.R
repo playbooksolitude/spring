@@ -89,4 +89,71 @@ aptable |> filter(n > 100) |>
              )
 
 
+#통계 #신뢰구간 #신뢰수준
+#https://www.youtube.com/live/WFXnjLTf6Jc?si=kyhiY7PSQws050jN&t=4072
+
+#https://www.youtube.com/live/KMIZPgEQNHk?si=WfLWlL8eRjfaL5Yh&t=1269
+
+#https://www.youtube.com/live/Jaknww22xjk?si=PzsF57YchyW0fRKH&t=1255
+
+#https://en.wikipedia.org/wiki/Confidence_interval
+
+
+# stat = "count
+airport_2402_Sheet |> 
+  count(날짜) |> 
+  ggplot(aes(x = 날짜, y = n)) +
+  geom_bar(stat = "identity")
+
+
+#
+airport_2402_Sheet |> 
+  count(날짜, 구분) |> 
+  ggplot(aes(x = 날짜, y = n, fill = 구분)) +
+  geom_bar(stat = "identity")
+
+
+#
+airport_2402_Sheet |> 
+  count(날짜, 구분, 현황) |> 
+  ggplot(aes(x = 날짜, y = n, fill = 현황)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  theme(legend.position = "top")
+
+#
+airport_2402_Sheet |> 
+  count(날짜, 구분, 현황) |> 
+  ggplot(aes(x = 날짜, y = n, fill = 현황)) +
+  geom_bar(stat = "identity") +
+  geom_text(data = airport_2402_Sheet |> 
+              count(날짜, 현황), 
+    aes(label = n), 
+            position = position_stack(.5)) +
+  coord_flip() +
+  theme(legend.position = "top")
+
+#
+airport_2402_Sheet |> 
+  count(날짜, 현황) |> 
+  ggplot(aes(x = 현황, y = 날짜, 
+             fill = n)) +
+  #geom_tile() +
+  geom_tile(color = "white") +
+  geom_text(aes(label = n), color = "black") +
+  scale_fill_gradient(low = '#e2e2e2', 
+                      high = 'red') +
+  ggtitle(label = "2024.2 도착현황", 
+          subtitle = "인천공항") +
+  scale_y_continuous(breaks = c(20240201, 
+                                20240210,
+                                20240220,
+                                20240229)) +
+  theme(legend.position = "none", 
+        axis.title = element_blank(), 
+        axis.text = element_text(size = 15))
+
+
+
+
 
