@@ -7,6 +7,7 @@ library(googlesheets4)
 library(showtext)
 showtext_auto()
 library(nord)
+#https://github.com/playbooksolitude/spring/tree/main/2nd
 
 #1 read csv
 airport_2402_Sheet <- read_csv("1st/airport_2402 - Sheet.csv")
@@ -134,7 +135,7 @@ aptable |> filter(n > 100) |>
              #color = nord("afternoon_prarie")
             )
 
-#4 통계 ----
+#6 통계 ----
 #통계 #신뢰구간 #신뢰수준
 #https://www.youtube.com/live/WFXnjLTf6Jc?si=kyhiY7PSQws050jN&t=4072
 
@@ -145,28 +146,28 @@ aptable |> filter(n > 100) |>
 #https://en.wikipedia.org/wiki/Confidence_interval
 
 
-#6 stat = "count ----
+#7 stat = "count ----
 airport_2402_Sheet |> 
   count(날짜) |> 
   ggplot(aes(x = 날짜, y = n)) +
   geom_bar(stat = "identity")
 
 
-## 6-1 fill
+## 7-1 fill
 airport_2402_Sheet |> 
   count(날짜, 구분) |> 
   ggplot(aes(x = 날짜, y = n, fill = 구분)) +
   geom_bar(stat = "identity")
 
 
-## 6-2 coord_flip ----
+## 7-2 coord_flip ----
 airport_2402_Sheet |> 
   count(날짜, 구분, 현황) |> 
   ggplot(aes(x = 날짜, y = n, fill = 현황)) +
   geom_bar(stat = "identity") +
   coord_flip() 
 
-## 6-3 theme ----
+## 7-3 theme ----
 airport_2402_Sheet |> 
   count(날짜, 구분, 현황) |> 
   ggplot(aes(x = 날짜, y = n, fill = 현황)) +
@@ -174,7 +175,7 @@ airport_2402_Sheet |>
   coord_flip() +
   theme(legend.position = "top")
 
-## 6-4 geom_text ----
+## 7-4 geom_text ----
 airport_2402_Sheet |> 
   count(날짜, 구분, 현황) |> 
   ggplot(aes(x = 날짜, y = n, fill = 현황)) +
@@ -187,7 +188,7 @@ airport_2402_Sheet |>
   theme(legend.position = "top")
 
 
-  ## 6-5 nord ----
+  ## 7-5 nord ----
 airport_2402_Sheet |> 
   count(날짜, 구분, 현황) |> 
   ggplot(aes(x = 날짜, y = n, fill = 현황)) +
@@ -201,7 +202,25 @@ airport_2402_Sheet |>
   scale_fill_manual(values = nord("lumina"))
  
 
-#7 heatmap ----
+#8 heatmap ----
+airport_2402_Sheet |> 
+  count(날짜, 현황) |> 
+  ggplot(aes(x = 현황, y = 날짜, 
+             fill = n)) +
+  geom_tile() +
+  geom_text(aes(label = n), color = "black") 
+
+##8-1 color ----
+airport_2402_Sheet |> 
+  count(날짜, 현황) |> 
+  ggplot(aes(x = 현황, y = 날짜, 
+             fill = n)) +
+  #geom_tile() +
+  geom_tile(color = "white") +
+  geom_text(aes(label = n), color = "black") 
+
+
+#9 scale_y_continuous ----
 airport_2402_Sheet |> 
   count(날짜, 현황) |> 
   ggplot(aes(x = 현황, y = 날짜, 
@@ -220,8 +239,5 @@ airport_2402_Sheet |>
   theme(legend.position = "none", 
         axis.title = element_blank(), 
         axis.text = element_text(size = 15))
-
-
-
 
 
