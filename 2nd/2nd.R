@@ -12,6 +12,7 @@ library(nord)
 #1 read csv
 airport_2402_Sheet <- read_csv("1st/airport_2402 - Sheet.csv")
 
+
   # check
 airport_2402_Sheet |> head()
 airport_2402_Sheet |> tail()
@@ -20,8 +21,13 @@ airport_2402_Sheet |> tail()
 airport_2402_Sheet |> 
   count(출발공항명, sort = T) -> aptable
 
+airport_2402_Sheet |> count(출발공항명, sort = T) -> aptable
+(airport_2402_Sheet |> count(출발공항명, sort = T) -> aptable)
+
+
 #2 wordcolud ----
 library(wordcloud)
+wordcloud(words = aptable$출발공항명, freq = aptable$n)
 
 # wordcloud
 wordcloud(words = aptable$출발공항명, 
@@ -34,6 +40,7 @@ wordcloud(words = aptable$출발공항명,
 ## RColorBrewer
 
 ?RColorBrewer
+RColorBrewer::display.brewer.all()
 RColorBrewer::display.brewer.all()
 display.brewer.all()
 display.brewer.pal(n = 6, name = "Set2")
@@ -57,10 +64,11 @@ library(colorspace)
 
   #3-1 palettes ----
 colorspace::hcl_palettes(plot = T)
+colorspace::hcl_palettes(plot = T)
 colorspace::hcl_palettes(plot = T, type = "Diverging")
 qualitative_hcl(n=5, palette='Harmonic')       
 qualitative_hcl(n=2, palette='Harmonic')
-diverging_hcl(n = 5, palette = "Blue-red 2")
+diverging_hcl(n = 8, palette = "Blue-red 2")
 
 #brewer.pal.info
 #https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3
@@ -72,7 +80,7 @@ wordcloud(words = aptable$출발공항명,
           max.words = Inf, 
           random.order = F,
           random.color = F, 
-          colors = qualitative_hcl(n = 5, palette = "Dark 3"))
+          colors = qualitative_hcl(n = 8, palette = "Dark2"))
 
   ## 3-3 palettes 만들기 ----
 colorspace::choose_palette()
@@ -113,11 +121,11 @@ library(nord)
 nord_palettes
 
 #https://cran.r-project.org/web/packages/nord/readme/README.html
-#https://m.blog.naver.com/regenesis90/222204802284
+https://m.blog.naver.com/regenesis90/222204802284
 
-# par(mfrow=c(8, 2), lheight = 2, mar=rep(1, 4), adj = 0)
-# walk(names(nord_palettes), nord_show_palette)
-# dev.off()
+#par(mfrow=c(8, 2), lheight = 2, mar=rep(1, 4), adj = 0)
+#walk(names(nord_palettes), nord_show_palette)
+#dev.off()
 
   ##5-1 nord ----
 aptable |> filter(n > 100) |> 
