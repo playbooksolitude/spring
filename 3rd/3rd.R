@@ -55,6 +55,22 @@ flights |>
   pivot_wider(names_from = origin, values_from = n)
 
 #
+install.packages("viridis")
+library(viridis)
+
+flights |> 
+  group_by(month, origin) |> 
+  reframe(n = n()) |> 
+  ggplot(aes(color = origin)) +
+  geom_point(aes(x = factor(month), 
+    y = origin, 
+    size = n)) #+
+  #scale_size(range = c(5, 20)) +
+  #scale_color_viridis(discrete=TRUE, guide=FALSE, option="A") +
+  #theme(legend.position = "none")
+  
+
+#
 flights |> 
   group_by(month, origin) |> 
   reframe(n = n()) |> 
@@ -69,7 +85,10 @@ flights |>
   theme(legend.position = "none")
   
 #
-
+diamonds |> 
+  filter(y < 20) |> 
+  ggplot(aes(x = cut, y = y)) +
+  geom_point()
 
 #
 diamonds |> 
@@ -82,7 +101,7 @@ diamonds |>
 diamonds |> 
   ggplot(aes(x = cut, y = x)) +
   #geom_point() +
-  geom_jitter(alpha = .5, 
+  geom_jitter(alpha = .9, 
     color = ifelse(diamonds$x == 0, "red", "black"))
 
 
