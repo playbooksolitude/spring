@@ -15,7 +15,7 @@ diamonds
 #https://www2.stat.duke.edu/courses/Fall15/sta112.01/post/hw/HW1.html
 
 #
-#install.packages("nycflights13")
+install.packages("nycflights13")
 library(nycflights13)
 
 #
@@ -135,3 +135,8 @@ diamonds |>
 #
 #https://exts.ggplot2.tidyverse.org/gallery/
 #https://r-graph-gallery.com/
+
+
+
+#
+coord_cartesian(ylim = c(0,200))
