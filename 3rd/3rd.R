@@ -12,22 +12,78 @@ library(bbplot)
 
 #
 diamonds
+?diamonds
 #https://www2.stat.duke.edu/courses/Fall15/sta112.01/post/hw/HW1.html
 
 #
 install.packages("nycflights13")
 library(nycflights13)
+flights |> head(30)
+flights |> tail()
+flights |> slice(1:30) |> print(n = Inf) 
+
+#quin
+  #1234행~1345행 slice 조회하세요
+
+flights |> slice(1:30) |> print(n = Inf) |> view()
+flights |> slice(1:30)
 
 #
 diamonds
 ?diamonds
-2.43/mean(3.95,3.98)
+# 2.43/mean(3.95,3.98)
+
+diamonds
+diamonds |> filter(!is.na(cut))
+
+# 전체 요약보기 #
+diamonds |> 
+  summary()
+
+#
+diamonds |> 
+  ggplot(aes(x = x, y = y)) +
+  geom_point()
+
+diamonds |> colnames()
+
+#
+table(diamonds$cut)
+diamonds$color |> table()
+diamonds$color |> table() |> data.frame() -> temp1
+
+#면분할
+diamonds |> 
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_grid(. ~ cut)
+
+
+#
+
+# 60 근사값
+diamonds |> 
+  filter(y > 50)
+
+#식별값 만들기
+diamonds |> 
+  mutate(number = row_number(), .before = 1) -> temp_diamonds
+
+temp_diamonds |> 
+  filter(y > 50)
+
 
 #
 diamonds |> 
   ggplot(aes(x = x, y = y)) +
   geom_point() +
   facet_grid(cut ~ color)
+
+rm(temp_diamonds)
+
+#
+flights |> 
+  summary()
 
 #
 flights |> 
@@ -47,6 +103,8 @@ flights |>
 flights |> 
   group_by(month, dest) |> 
   reframe(n = n())
+
+
 
 #
 flights |> 
@@ -121,7 +179,6 @@ diamonds |>
 diamonds |> 
   filter(y < 20) |> 
   ggplot(aes(x = cut, y = y)) +
-  #geom_point(position = "jitter")
   geom_jitter(width = .3, alpha = .5)
 
 #
