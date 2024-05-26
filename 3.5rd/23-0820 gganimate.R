@@ -1,25 +1,47 @@
 #24-0505
 
-#
-library(tidyverse)
-#install.packages("gganimate")
+# 1 패키지 설치 ----
+  #1-1 library(tidyverse)
+
+  #1-2 
+#install.packages("gganimate") ---- 패키지 설치
 library(gganimate)
+
+  #1-3 
 #install.packages("gifski")
 library(gifski)
+
+  #1-4 
+#install.packages("gapminder")
 library(gapminder)
+
+#1-5 
+#install.packages("av")
+library(av)
 
 #
 getwd()
 
+
 #
-#install.packages("av")
-library(av)
+mtcars
 
 #
 ggplot(mtcars) + 
   geom_boxplot(aes(factor(cyl), mpg)) + 
   transition_manual(gear)
 
+#
+ggplot(mtcars, aes(factor(cyl), mpg)) + 
+  geom_boxplot() + 
+  # Here comes the gganimate code
+  transition_states(
+    gear,
+    transition_length = 2,
+    state_length = 1) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('sine-in-out')
 
 #directory 권한 변경
 #https://youtu.be/VfLRhPEuYDc?si=ut0Aey8oSjGA8Xxf&t=153
@@ -38,6 +60,7 @@ ggplot(mtcars) +
 # anim_a + 
 #   view_follow(fixed_x = T,
 #               fixed_y = c(2500, NA))
+
 
 
 #render error
@@ -68,6 +91,10 @@ animate(temp_1, renderer = av_renderer())
 
 
 #
+?mtcars
+mtcars
+
+#mtcars#
 anim <- ggplot(mtcars, aes(mpg, disp)) +
   geom_point(aes(color = gear)) +
   transition_states(gear, transition_length = 2, 
@@ -82,7 +109,12 @@ animate(anim)
 animate(anim, fps = 20, duration = 15)
 
 # Make the animation pause at the end and then rewind
-animate(anim, nframes = 100, end_pause = 10, rewind = TRUE)
+animate(anim, 
+  nframes = 300, 
+  end_pause = 10, 
+  rewind = F)
+
+?animate
 
 # Use a different renderer
 animate(anim, renderer = file_renderer('~/animation/'))[1:6]
