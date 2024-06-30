@@ -52,7 +52,6 @@ ggplot(data = netflix_4rankorder) +
       label = n), stat = "identity")
 
 # 8 그래프 꾸미기
-
 ggplot(data = netflix_4rankorder) +
   geom_bar(aes(x = show_title |> fct_reorder(n), 
     y = n), 
@@ -67,6 +66,20 @@ ggplot(data = netflix_4rankorder) +
   theme(axis.title = element_text(size = 22), 
     axis.text = element_text(size = 12))
 
+# test
+ggplot(data = netflix_4rankorder) +
+  geom_bar(aes(x = show_title |> fct_reorder(n), 
+    y = n), 
+    stat = "identity",
+    fill = "black") +
+  coord_flip() +
+  xlab(label = "Title") +
+  geom_label(aes(x = show_title, y = n,
+    label = n), stat = "identity") +
+  ggtitle(label = "Netflix Films rank 1", 
+    subtitle = "2024.01 ~ 2024.06") +
+  theme(axis.title = element_text(size = 22), 
+    axis.text = element_text(size = 12))
 
 
 
