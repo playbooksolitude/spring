@@ -64,7 +64,8 @@ ggplot(data = netflix_4rankorder) +
     label = n), stat = "identity") +
   ggtitle(label = "Netflix Films rank 1", 
     subtitle = "2024.01~06") +
-  theme(axis.title = element_text(size = 22))
+  theme(axis.title = element_text(size = 22), 
+    axis.text = element_text(size = 12))
 
 
 
