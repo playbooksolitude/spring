@@ -6,11 +6,19 @@ library(readr)
 
 #2 tsv 파일 불러오기
 (read_tsv("./season_3/1st/all-weeks-countries_240630.tsv") -> netflix_1countries)
+all_weeks_countries_240630 -> netflix_1countries
 
 
 #3 데이터 조회
-#install.packages("drply")
+#install.packages("dplyr")
 library(dplyr)
+
+
+
+
+
+netflix_1countries
+
 filter(netflix_1countries, country_iso2 == "KR")
 (filter(netflix_1countries, country_iso2 == "KR") -> netflix_2kr)
 
@@ -30,9 +38,17 @@ filter(netflix_2kr, category == "Films")
 # 6 그래프 그리기
 #install.packages("ggplot2")
 library(ggplot2)
+#기존 그래프 ----
+# ggplot(data = netflix_3rank) +
+#   geom_bar(aes(x = show_title, y = after_stat(count)),
+#     stat = "count")
+
+
 ggplot(data = netflix_3rank) +
   geom_bar(aes(x = show_title, y = after_stat(count)),
     stat = "count")
+
+
 
 # 6-1 x축- y축 전환
 ggplot(data = netflix_3rank) +
