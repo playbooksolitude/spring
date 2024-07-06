@@ -10,7 +10,7 @@ gapminder |>
   group_by(year) |> 
   reframe(n = n())
 
-#
+# 1 gapminder ----
 gapminder
 gapminder |> 
   ggplot(
@@ -20,7 +20,7 @@ gapminder |>
   geom_point() +
   ggtitle(label = "lifeExp * gdpPercap")
 
-# continent color
+# 2 continent color ----
 gapminder |> 
   ggplot(
     aes(
@@ -31,7 +31,7 @@ gapminder |>
   ggtitle(label = "lifeExp * gdpPercap") 
 
 
-# facet_wrap
+# 3 facet_wrap ----
 gapminder |> 
   ggplot(
     aes(
@@ -43,7 +43,7 @@ gapminder |>
   facet_wrap(.~continent)
 #scale_x_log10(labels = scales::dollar)  
 
-# 
+# 4 goem_smooth
 gapminder |> 
   ggplot(
     aes(
@@ -69,7 +69,7 @@ gapminder_1edit
   #       medianlife = median(lifeExp)), by = "continent"
   # )
 
-#
+# 5
 gapminder_1edit |> 
   ggplot(
     aes(
@@ -77,9 +77,7 @@ gapminder_1edit |>
       y = lifeExp)) +
   geom_point()
 
-
-
-# geom_boxplot
+# 6 geom_boxplot----
 gapminder_1edit |> 
   ggplot(aes(x = continent, y = lifeExp)) +
   geom_boxplot() +
