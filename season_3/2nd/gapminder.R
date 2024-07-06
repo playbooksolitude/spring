@@ -10,7 +10,53 @@ gapminder |>
   group_by(year) |> 
   reframe(n = n())
 
-# 10년 단위
+#
+gapminder
+gapminder |> 
+  ggplot(
+    aes(
+      x = gdpPercap,
+      y = lifeExp)) +
+  geom_point() +
+  ggtitle(label = "lifeExp * gdpPercap")
+
+# continent color
+gapminder |> 
+  ggplot(
+    aes(
+      x = gdpPercap,
+      y = lifeExp,
+      color = continent)) +
+  geom_point() +
+  ggtitle(label = "lifeExp * gdpPercap") 
+
+
+# facet_wrap
+gapminder |> 
+  ggplot(
+    aes(
+      x = gdpPercap,
+      y = lifeExp,
+      color = continent)) +
+  geom_point() +
+  ggtitle(label = "lifeExp * gdpPercap") +
+  facet_wrap(.~continent)
+#scale_x_log10(labels = scales::dollar)  
+
+# 
+gapminder |> 
+  ggplot(
+    aes(
+      x = gdpPercap,
+      y = lifeExp,
+      color = continent)) +
+  geom_point() +
+  ggtitle(label = "lifeExp * gdpPercap") +
+  geom_smooth()
+#scale_x_log10(labels = scales::dollar)  
+
+
+# 10년 단위# 10년 단위labels()
 gapminder |> 
   filter(year %in% c("1957", "1967", "1977", "1987", 
     "1997", "2007")) -> gapminder_1edit
@@ -23,10 +69,25 @@ gapminder_1edit
   #       medianlife = median(lifeExp)), by = "continent"
   # )
 
+#
+gapminder_1edit |> 
+  ggplot(
+    aes(
+      x = gdpPercap,
+      y = lifeExp)) +
+  geom_point()
+
+
+
 # geom_boxplot
 gapminder_1edit |> 
   ggplot(aes(x = continent, y = lifeExp)) +
-  geom_boxplot()
+  geom_boxplot() +
+  ggtitle(label = "Gapminder", 
+    subtitle = "1957~2007")
+
+
+
 
 #
 library(plotly)
