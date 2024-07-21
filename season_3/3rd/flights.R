@@ -1,5 +1,15 @@
 #24-0720 sat 08:19
 
+#
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readr)
+#library(tidyverse)
+library(showtext)
+showtext_auto()
+
+
 # 지난주 geom_point()
 mpg |> 
   ggplot(aes(x = drv, y = cty)) +
@@ -8,14 +18,6 @@ mpg |>
 mpg |> 
   ggplot(aes(x = drv, y = cty)) +
   geom_point(position = position_jitter(width = .1))
-
-#
-library(ggplot2)
-library(dplyr)
-library(tidyverse)
-library(showtext)
-showtext_auto()
-
 
 # 인천공항 2024년 2월  -----------
 airport_2402_Sheet <- read_csv("./season_3/3rd/airport_2402_Sheet.csv")
@@ -36,13 +38,15 @@ airport_2402_Sheet |>
 
 #
 library(readxl)
+library(forcats)
 read_excel("./season_3/3rd/airport_240701_240721.xlsx") -> airport_2407_sheet
 
 airport_2407_sheet |> 
   count(출발공항명,항공사, 현황, sort = T) |> 
-  ggplot(aes(x = 현황 |> fct_reor,
+  ggplot(aes(x = 현황 |> fct_infreq(),
+  #ggplot(aes(x = 현황 |> fct_infreq() |> fct_rev(),
     y = after_stat(count))) +
-  geom_bar() +
+  geom_bar(stat = "count") +
   geom_label(aes(label = after_stat(count)), 
     stat = "count", size = 6) +
   theme(axis.text.x = element_text(size = 20), 
@@ -50,10 +54,10 @@ airport_2407_sheet |>
     axis.ticks = element_blank(),
     plot.title = element_text(size = 28),
     plot.subtitle = element_text(size = 18)) +
-  ggtitle(label = "2024.02.07~13", subtitle = "부제목")
+  ggtitle(subtitle = "2024.0701 ~ 0721", 
+    label = "인천공항 도착정보")
 
 
-#
 # -----------
 # data set install
 #install.packages("nycflights")
