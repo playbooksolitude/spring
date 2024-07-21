@@ -1,17 +1,78 @@
 #24-0705 #sat 13:25
 
-#
-library(tidyverse)
+# 
+library(dplyr)
+library(ggplot2)
+
+# data()
+data()
+install.packages("gapminder")
+install.packages('gapminder')
 library(gapminder)
+
+#
+gapminder |> view()
+gapminder |> dim() #dataset size
+gapminder |> nrow() #행
+gapminder |> ncol() #열
+
+#생략된 함수
+gapminder |> view()
+flights |> view()
+gapminder |> head()
+gapminder |> tail()
+gapminder #101번째~110번째
+gapminder |> slice(101:110) #201~201
+gapminder
+flights |> print(n = 1000)
+flights |> print(width = Inf)
+
+#
+gapminder
 gapminder |> 
   colnames()
+
+library(readxl)
+read_excel()
+read_tsv("./season_3/2nd/")
+read_tsv("./season_3/1st/all-weeks-countries_240630.tsv") -> netflix_1countries
+
+dim(netflix_1countries)
+
+netflix_1countries |> dim()
+netflix_1countries
+
+# 원하는 변수만 지우는 명령어
+rm(all_weeks_countries_240630)
+
+# 모든 변수를 지우는 명령어
+rm(list = ls())
+
+
+#
 ?gapminder
-gapminder |> 
-  group_by(year) |> 
-  reframe(n = n())
+?ggplot
+
 
 # 1 gapminder ----
 gapminder
+gapminder |> #갭마인더 데이터 셋을 가지고
+  ggplot(    #그래프를 그릴거야
+    aes(     #동적인 요소를 지정
+      x = gdpPercap, #가로축은 gdpPercap 
+    y = lifeExp)) +  #세로축은 lifeExp
+geom_point()
+
+#
+gapminder |> 
+  ggplot(aes(x = gdpPercap, 
+    y = lifeExp)) +
+  geom_point() +
+  ggtitle(label = "lifeExp * gdpPercap",
+    subtitle = "Gapminder")
+
+
+#
 gapminder |> 
   ggplot(
     aes(
@@ -19,6 +80,8 @@ gapminder |>
       y = lifeExp)) +
   geom_point() +
   ggtitle(label = "lifeExp * gdpPercap")
+gapminder |> colnames()
+gapminder
 
 # 2 continent color ----
 gapminder |> 
@@ -29,6 +92,29 @@ gapminder |>
       color = continent)) +
   geom_point() +
   ggtitle(label = "lifeExp * gdpPercap") 
+
+# 2 edit
+gapminder |> 
+  ggplot(aes(
+      x = gdpPercap,
+      y = lifeExp,
+      color = continent)) +
+  geom_point() +
+  ggtitle(label = "lifeExp * gdpPercap") +
+  facet_wrap(.~continent, 
+    nrow = 2, scales = "free_x") +
+  #theme(legend.position = "top") 
+  #theme(legend.position = "bottom")
+  theme(legend.position = "left")
+
+#
+gapminder |> 
+  ggplot(aes(
+    x = gdpPercap,
+    y = lifeExp, 
+    color = continent)) +
+  geom_point() 
+
 
 
 # 3 facet_wrap ----
@@ -78,21 +164,20 @@ gapminder_1edit |>
   geom_point()
 
 # 6 geom_boxplot----
-gapminder_1edit |> 
+gapminder |> 
   ggplot(aes(x = continent, y = lifeExp)) +
   geom_boxplot() +
-  ggtitle(label = "Gapminder", 
-    subtitle = "1957~2007")
-
-
-
+  #geom_jitter(width = .2)
+  geom_point()
 
 #
+install.packages("plotly")
 library(plotly)
 gapminder_1edit |> 
-  ggplot(aes(x = continent, y = lifeExp)) +
-  geom_boxplot() -> gapminder_1edit_p
-
+  ggplot(aes(x = gdpPercap, 
+    y = lifeExp, 
+    color = country)) +
+  geom_point() -> gapminder_1edit_p
 ggplotly(gapminder_1edit_p)
 
 
@@ -113,7 +198,7 @@ gapminder_1edit |>
   ) -> gapminder_2editmean
 
 # gapminder_2editmean
-gapminder_2editmean
+gapminder_2editmean |> view()
 
 gapminder |> 
   ggplot(aes(x = continent, y = lifeExp)) +
@@ -148,4 +233,12 @@ filter(
   gapminder, 
   str_detect(gapminder$country, "orea")
       ) 
+
+
+gapminder |> 
+  ggplot(aes(x = continent, 
+    y = lifeExp)) +
+  geom_boxplot() +
+  geom_violin()
+  geom_jitter(width = .1, height = .3)
 
