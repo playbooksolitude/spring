@@ -16,6 +16,45 @@ library(tidyverse)
 library(showtext)
 showtext_auto()
 
+
+# 인천공항 2024년 2월  -----------
+airport_2402_Sheet <- read_csv("./season_3/3rd/airport_2402_Sheet.csv")
+
+airport_2402_Sheet |> 
+  count(출발공항명,항공사, 현황, sort = T) |> 
+  ggplot(aes(x = 현황, 
+    y = after_stat(count))) +
+  geom_bar() +
+  geom_label(aes(label = after_stat(count)), 
+    stat = "count", size = 6) +
+  theme(axis.text.x = element_text(size = 20), 
+    axis.title = element_blank(), 
+    axis.ticks = element_blank(),
+    plot.title = element_text(size = 28),
+    plot.subtitle = element_text(size = 18)) +
+  ggtitle(label = "2024.02.07~13", subtitle = "부제목")
+
+#
+library(readxl)
+read_excel("./season_3/3rd/airport_240701_240721.xlsx") -> airport_2407_sheet
+
+airport_2407_sheet |> 
+  count(출발공항명,항공사, 현황, sort = T) |> 
+  ggplot(aes(x = 현황 |> fct_reor,
+    y = after_stat(count))) +
+  geom_bar() +
+  geom_label(aes(label = after_stat(count)), 
+    stat = "count", size = 6) +
+  theme(axis.text.x = element_text(size = 20), 
+    axis.title = element_blank(), 
+    axis.ticks = element_blank(),
+    plot.title = element_text(size = 28),
+    plot.subtitle = element_text(size = 18)) +
+  ggtitle(label = "2024.02.07~13", subtitle = "부제목")
+
+
+#
+# -----------
 # data set install
 #install.packages("nycflights")
 
@@ -283,21 +322,14 @@ flights |>
   group_by(year, month, day) |> 
   reframe(mean_delay = mean(arr_delay, na.rm = T),
     mean_distance = mean(distance, na.rm = T),
-    n = n()) |> 
+    n = n()) -> flights13
+
+flights13 |> 
   ggplot(aes(x = mean_distance, y = mean_delay)) +
   geom_point(position = position_jitter(width = .2)) + 
-  geom_smooth()
+  geom_smooth() +
+  ggtitle(label = "distance * delay")
 
-#
-
-#
-flights |> 
-  filter(month == 1)
-
-#
-flights |> 
-  filter(month == "1", arr_delay == 0)
-  
 #
 flights |> 
   ggplot(aes(x = distance, y = arr_delay)) +
